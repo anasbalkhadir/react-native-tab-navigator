@@ -14,6 +14,7 @@ import Layout from './Layout';
 export default class TabBar extends React.Component {
   static propTypes = {
     ...Animated.View.propTypes,
+    tabBarStyle: ViewPropTypes.style,
     shadowStyle: ViewPropTypes.style,
   };
 
