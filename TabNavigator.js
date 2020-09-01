@@ -38,7 +38,7 @@ export default class TabNavigator extends React.Component {
     const { renderedSceneKeys } = state;
     return {
       renderedSceneKeys: TabNavigator.updateRenderedSceneKeys(
-        nextProps.children,
+        props.children,
         renderedSceneKeys,
       ),
     };
