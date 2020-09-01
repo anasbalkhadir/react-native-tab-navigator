@@ -28,7 +28,7 @@ export default class TabNavigator extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      renderedSceneKeys: this.updateRenderedSceneKeys(props.children),
+      renderedSceneKeys: TabNavigator.updateRenderedSceneKeys(props.children),
     };
 
     this._renderTab = this._renderTab.bind(this);
@@ -37,7 +37,7 @@ export default class TabNavigator extends React.Component {
   static getDerivedStateFromProps(props, state) {
     const { renderedSceneKeys } = state;
     return {
-      renderedSceneKeys: this.updateRenderedSceneKeys(
+      renderedSceneKeys: TabNavigator.updateRenderedSceneKeys(
         nextProps.children,
         renderedSceneKeys,
       ),
@@ -50,7 +50,7 @@ export default class TabNavigator extends React.Component {
       if (item === null) {
         return;
       }
-      let key = this.getSceneKey(item, index);
+      let key = TabNavigator.getSceneKey(item, index);
       if (oldSceneKeys.has(key) || item.props.selected) {
         newSceneKeys.add(key);
       }
@@ -70,7 +70,7 @@ export default class TabNavigator extends React.Component {
       if (item === null) {
         return;
       }
-      let sceneKey = this.getSceneKey(item, index);
+      let sceneKey = TabNavigator.getSceneKey(item, index);
       if (!this.state.renderedSceneKeys.has(sceneKey)) {
         return;
       }
