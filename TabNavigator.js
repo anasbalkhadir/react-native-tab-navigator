@@ -28,38 +28,38 @@ export default class TabNavigator extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      renderedSceneKeys: this._updateRenderedSceneKeys(props.children),
+      renderedSceneKeys: this.updateRenderedSceneKeys(props.children),
     };
 
     this._renderTab = this._renderTab.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    let { renderedSceneKeys } = this.state;
-    this.setState({
-      renderedSceneKeys: this._updateRenderedSceneKeys(
+  static getDerivedStateFromProps(props, state) {
+    const { renderedSceneKeys } = state;
+    return {
+      renderedSceneKeys: this.updateRenderedSceneKeys(
         nextProps.children,
         renderedSceneKeys,
       ),
-    });
+    };
   }
 
-  _getSceneKey(item, index): string {
-    return `scene-${(item.key !== null) ? item.key : index}`;
-  }
-
-  _updateRenderedSceneKeys(children, oldSceneKeys = Set()): Set {
+  static updateRenderedSceneKeys(children, oldSceneKeys = Set()): Set {
     let newSceneKeys = Set().asMutable();
     React.Children.forEach(children, (item, index) => {
       if (item === null) {
         return;
       }
-      let key = this._getSceneKey(item, index);
+      let key = this.getSceneKey(item, index);
       if (oldSceneKeys.has(key) || item.props.selected) {
         newSceneKeys.add(key);
       }
     });
     return newSceneKeys.asImmutable();
+  }
+
+  static getSceneKey(item, index): string {
+    return `scene-${(item.key !== null) ? item.key : index}`;
   }
 
   render() {
@@ -70,7 +70,7 @@ export default class TabNavigator extends React.Component {
       if (item === null) {
         return;
       }
-      let sceneKey = this._getSceneKey(item, index);
+      let sceneKey = this.getSceneKey(item, index);
       if (!this.state.renderedSceneKeys.has(sceneKey)) {
         return;
       }
